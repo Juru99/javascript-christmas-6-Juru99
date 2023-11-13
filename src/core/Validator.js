@@ -1,7 +1,7 @@
 class Validator {
-  validateVisitDate(visitDate) {}
+  static validateVisitDate(visitDate) {}
 
-  validateMenu(menu) {}
+  static validateMenu(menu) {}
 }
 
 export default Validator;
