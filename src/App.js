@@ -1,4 +1,3 @@
-import { Console } from '@woowacourse/mission-utils';
 import Reservation from './core/Reservation';
 
 class App {
@@ -8,11 +7,7 @@ class App {
     this.#reservation = new Reservation();
   }
   async run() {
-    try {
-      this.#reservation.makeAReservation();
-    } catch (error) {
-      Console.print(error.message);
-    }
+    await this.#reservation.makeAReservation();
   }
 }
 
