@@ -1,4 +1,4 @@
-import { CONFIG } from '../constants/constants';
+import { MENU } from '../constants/constants';
 import Utils from '../utils/Utils';
 
 class Validator {
@@ -14,10 +14,7 @@ class Validator {
       orderMenu.map((menuItem) => menuItem[1]),
       Number,
     );
-    const allMenuName = [];
-    ['애피타이저', '메인', '디저트', '음료'].forEach((kind) => {
-      allMenuName.push(...Object.keys(CONFIG.menu[kind]));
-    });
+    const allMenuName = MENU.map((item) => item.name);
 
     this.#validateNoMenu(menuNames, allMenuName);
     this.#validateLessThan1(menuCount);
@@ -61,7 +58,9 @@ class Validator {
   }
 
   #validateOnlyDrink(menuNames) {
-    const drink = Object.keys(CONFIG.menu.음료);
+    const drink = MENU.filter((item) => item.category === '음료').map(
+      (item) => item.name,
+    );
     const noDrinkMenuNames = menuNames.filter(
       (value) => !drink.includes(value),
     );
