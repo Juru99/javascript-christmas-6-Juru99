@@ -1,4 +1,5 @@
 import InputView from '../views/InputView';
+import OutputView from '../views/OutputView';
 import Benefit from './Benefit';
 import Order from './Order';
 
@@ -14,11 +15,15 @@ class Reservation {
   }
 
   async makeAReservation() {
-    await InputView.readDate();
-    await InputView.readMenu();
+    this.#visitDate = await InputView.readDate();
+    this.#menu = await InputView.readMenu();
 
     const totalAmount = this.#order.calculateTotalAmount(this.#menu);
-    this.#benefit.calculateBenefit(totalAmount, this.#visitDate, this.#menu);
+    if (totalAmount >= 10000) {
+      this.#benefit.calculateBenefit(totalAmount, this.#visitDate, this.#menu);
+    } else {
+      OutputView.printNoEvent(totalAmount);
+    }
   }
 }
 
