@@ -1,3 +1,4 @@
+import OutputView from '../views/OutputView';
 import Discount from './Discount';
 
 class Benefit {
@@ -13,6 +14,19 @@ class Benefit {
       visitDate,
       menu,
     );
+
+    const totalDiscount = this.#calculateTotalDiscount(totalBenefit);
+    OutputView.printExpectedPaymentAmount(totalAmount - totalDiscount);
+    OutputView.printEventBadge(totalDiscount);
+  }
+
+  #calculateTotalDiscount(totalBenefit) {
+    let totalDiscount = 0;
+    totalBenefit.forEach((item) => {
+      totalDiscount += item[1];
+    });
+
+    return totalDiscount;
   }
 }
 
