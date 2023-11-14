@@ -22,6 +22,7 @@ class Reservation {
     if (totalAmount >= 10000) {
       this.#benefit.calculateBenefit(totalAmount, this.#visitDate, this.#menu);
     } else {
+      if (Number.isNaN(Number(totalAmount))) totalAmount = 0;
       OutputView.printNoEvent(totalAmount);
     }
   }

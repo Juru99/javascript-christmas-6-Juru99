@@ -41,9 +41,9 @@ const OutputView = {
   printBenefitDetails(totalBenefit) {
     Console.print('<혜택 내역>');
 
-    for (const [benefit, amount] of Object.entries(totalBenefit)) {
-      Console.print(`${benefit}: -${Utils.separateThousand(amount)}원`);
-    }
+    totalBenefit.forEach((item) => {
+      Console.print(`${item[0]}: -${Utils.separateThousand(item[1])}원`);
+    });
   },
 
   printTotalBenefit(totalBenefit) {
@@ -53,6 +53,7 @@ const OutputView = {
 
   printExpectedPaymentAmount(expectedPaymentAmount) {
     Console.print('<할인 후 예상 결제 금액>');
+    if (Number.isNaN(Number(expectedPaymentAmount))) expectedPaymentAmount = 0;
     Console.print(`${Utils.separateThousand(expectedPaymentAmount)}원`);
   },
 
