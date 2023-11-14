@@ -8,9 +8,11 @@ class Utils {
   static separateMenu(menu) {
     const orderMenu = [];
 
-    menu.split(',').forEach((v) => {
-      orderMenu.push(v.split('-'));
-    });
+    String(menu)
+      .split(',')
+      .forEach((v) => {
+        orderMenu.push(v.split('-'));
+      });
 
     return orderMenu;
   }

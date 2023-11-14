@@ -18,7 +18,7 @@ class Reservation {
     this.#visitDate = await InputView.readDate();
     this.#menu = await InputView.readMenu();
 
-    const totalAmount = this.#order.calculateTotalAmount(this.#menu);
+    let totalAmount = this.#order.calculateTotalAmount(this.#menu);
     if (totalAmount >= 10000) {
       this.#benefit.calculateBenefit(totalAmount, this.#visitDate, this.#menu);
     } else {
