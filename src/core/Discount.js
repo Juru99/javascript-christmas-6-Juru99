@@ -1,22 +1,22 @@
-import { DATE, MENU, PRICE } from '../constants/constants';
 import Utils from '../utils/Utils';
 import OutputView from '../views/OutputView';
+import { DATE, MENU, PRICE } from '../constants/constants';
 
 class Discount {
   #totalBenefit = [];
 
   calculateDiscount(totalAmount, visitDate, menu) {
-    OutputView.printGiveawayMenu(totalAmount);
     const visitDay = Utils.calculateVisitDay(visitDate);
 
-    if (visitDate >= DATE.eventStart && visitDate <= DATE.eventEnd) {
+    if (visitDate >= DATE.startDate && visitDate <= DATE.endEvent) {
       this.#christmasDDayDiscount(visitDate);
     }
-    DATE.weekday.includes(visitDay) && this.#weekdayDiscount(menu);
-    DATE.weekend.includes(visitDay) && this.#weekendDiscount(menu);
+
+    this.#weekDiscount(menu, visitDay);
     DATE.special.includes(visitDate) && this.#specialDiscount();
     totalAmount >= PRICE.payment && this.#giveawayEventDiscount();
 
+    OutputView.printGiveawayMenu(totalAmount);
     OutputView.printBenefitDetails(this.#totalBenefit);
 
     return this.#totalBenefit;
@@ -24,38 +24,44 @@ class Discount {
 
   #christmasDDayDiscount(visitDate) {
     let discount = PRICE.christmasDDayStartDiscount;
-    discount += (Number(visitDate) - 1) * 100;
+    discount += (Number(visitDate) - 1) * PRICE.christmasDDayDiscount;
 
     this.#totalBenefit.push(['크리스마스 디데이 할인', discount]);
   }
 
-  #weekdayDiscount(menu) {
-    let discount = 0;
-    const dessert = [];
-    MENU.map((item) => item.category === '디저트' && dessert.push(item.name));
+  #weekDiscount(menu, visitDay) {
+    const menus = Utils.separateMenu(menu);
+    let categoryName = '';
+    let benefit = '';
 
-    Utils.separateMenu(menu).forEach((item) => {
-      if (dessert.includes(item[0])) {
-        discount += PRICE.week * Number(item[1]);
-      }
-    });
+    if (DATE.weekday.includes(visitDay)) {
+      categoryName = '디저트';
+      benefit = '평일 할인';
+    }
 
-    discount !== 0 && this.#totalBenefit.push(['평일 할인', discount]);
+    if (DATE.weekend.includes(visitDay)) {
+      categoryName = '메인';
+      benefit = '주말 할인';
+    }
+
+    this.#weekBenefit(menus, categoryName, benefit);
   }
 
-  #weekendDiscount(menu) {
+  #weekBenefit(menus, categoryName, benefit) {
     let discount = 0;
-    const main = [];
+    const category = [];
 
-    MENU.map((item) => item.category === '메인' && main.push(item.name));
+    MENU.map(
+      (item) => item.category === categoryName && category.push(item.name),
+    );
 
-    Utils.separateMenu(menu).forEach((item) => {
-      if (main.includes(item[0])) {
-        discount += PRICE.week * Number(item[1]);
+    menus.forEach((menu) => {
+      if (category.includes(menu[0])) {
+        discount += PRICE.week * Number(menu[1]);
       }
     });
 
-    discount !== 0 && this.#totalBenefit.push(['주말 할인', discount]);
+    discount !== 0 && this.#totalBenefit.push([benefit, discount]);
   }
 
   #specialDiscount() {

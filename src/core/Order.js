@@ -1,42 +1,32 @@
-import { MENU } from '../constants/constants';
 import Utils from '../utils/Utils';
 import OutputView from '../views/OutputView';
+import { MENU } from '../constants/constants';
 
 class Order {
-  #menus;
-  #totalAmount;
-
-  constructor() {
-    this.#totalAmount = 0;
-  }
-
   calculateTotalAmount(menu) {
-    this.#orderMenu(menu);
-    this.#calculateMenu();
-    OutputView.printTotalAmount(this.#totalAmount);
+    const menus = Utils.separateMenu(menu);
+    const totalAmount = this.#calculateMenu(menus);
 
-    return this.#totalAmount;
+    OutputView.printMenu(menus);
+    OutputView.printTotalAmount(totalAmount);
+
+    return totalAmount;
   }
 
-  #orderMenu(menu) {
-    this.#menus = Utils.separateMenu(menu);
-    OutputView.printMenu(this.#menus);
-  }
-
-  #calculateMenu() {
-    const menuNames = this.#menus.map((manuItem) => manuItem[0]);
-    const menuCount = Array.from(
-      this.#menus.map((manuItem) => manuItem[1]),
-      Number,
-    );
-    const menuPrice = menuNames.map((menuName) => {
+  #calculateMenu(menus) {
+    let totalAmount = 0;
+    const [menuNames, menuCounts] = Utils.separateMenuNameCount(menus);
+    const menuPrices = menuNames.map((menuName) => {
       const menuItem = MENU.find((item) => item.name === menuName);
       return menuItem ? menuItem.price : null;
     });
 
-    menuPrice.forEach((item, i) => {
-      this.#totalAmount += item * menuCount[i];
+    menuPrices.forEach((menuPrice, i) => {
+      totalAmount += menuPrice * menuCounts[i];
     });
+
+    if (Number.isNaN(Number(totalAmount))) totalAmount = 0;
+    return totalAmount;
   }
 }
 

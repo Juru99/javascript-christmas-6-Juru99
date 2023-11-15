@@ -5,16 +5,26 @@ class Utils {
     return date.getDay();
   }
 
-  static separateMenu(menu) {
+  static separateMenu(menus) {
     const orderMenu = [];
 
-    String(menu)
+    String(menus)
       .split(',')
-      .forEach((v) => {
-        orderMenu.push(v.split('-'));
+      .forEach((menu) => {
+        orderMenu.push(menu.split('-'));
       });
 
     return orderMenu;
+  }
+
+  static separateMenuNameCount(orderMenu) {
+    const menuNames = orderMenu.map((menuItem) => menuItem[0]);
+    const menuCounts = Array.from(
+      orderMenu.map((menuItem) => menuItem[1]),
+      Number,
+    );
+
+    return [menuNames, menuCounts];
   }
 
   static separateThousand(amount) {

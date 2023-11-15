@@ -65,14 +65,33 @@ export const DATE = {
   weekday: [0, 1, 2, 3, 4],
   weekend: [5, 6],
   special: [3, 10, 17, 24, 25, 31],
-  eventStart: 1,
-  eventEnd: 25,
+  startDate: 1,
+  endEvent: 25,
+  endDate: 31,
 };
 
 export const PRICE = {
+  minPrice: 10_000,
   christmasDDayStartDiscount: 1_000,
+  christmasDDayDiscount: 100,
   week: 2_023,
   special: 1_000,
   payment: 120_000,
   freeGift: 25_000,
+};
+
+export const COUNT = {
+  maxMenu: 20,
+  minMenu: 1,
+};
+
+export const MESSAGE = {
+  error: {
+    visitDate: '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.',
+    menu: '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.',
+  },
+};
+
+export const NAME = {
+  drink: '음료',
 };

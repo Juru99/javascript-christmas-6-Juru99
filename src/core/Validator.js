@@ -1,5 +1,5 @@
-import { MENU } from '../constants/constants';
 import Utils from '../utils/Utils';
+import { COUNT, DATE, MENU, MESSAGE, NAME } from '../constants/constants';
 
 class Validator {
   validateVisitDate(visitDate) {
@@ -9,72 +9,76 @@ class Validator {
 
   validateMenu(menu) {
     const orderMenu = Utils.separateMenu(menu);
-    const menuNames = orderMenu.map((menuItem) => menuItem[0]);
-    const menuCount = Array.from(
-      orderMenu.map((menuItem) => menuItem[1]),
-      Number,
-    );
+    const [menuNames, menuCounts] = Utils.separateMenuNameCount(orderMenu);
     const allMenuName = MENU.map((item) => item.name);
 
     this.#validateNoMenu(menuNames, allMenuName);
-    this.#validateLessThan1(menuCount);
+    this.#validateLessThan1(menuNames, menuCounts);
     this.#validateDuplication(menuNames);
-    this.#validateOnlyDrink(menuNames);
-    this.#validateMenuCount(menuCount);
+    this.#validateOnly(menuNames);
+    this.#validateMenuCount(menuCounts);
   }
 
   #validateIsInteger(input) {
-    if (!Number.isInteger(Number(input)))
-      throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.');
+    if (!Number.isInteger(Number(input))) {
+      throw new Error(MESSAGE.error.visitDate);
+    }
   }
 
-  #validateNotRange(input) {
-    if (Number(input) < 1 || Number(input) > 31)
-      throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.');
+  #validateNotRange(visitDate) {
+    if (
+      Number(visitDate) < DATE.startDate ||
+      Number(visitDate) > DATE.endDate
+    ) {
+      throw new Error(MESSAGE.error.visitDate);
+    }
   }
 
   #validateNoMenu(menuNames, allMenuName) {
     menuNames.forEach((menuName) => {
       if (!allMenuName.includes(menuName)) {
-        throw new Error(
-          '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.',
-        );
+        throw new Error(MESSAGE.error.menu);
       }
     });
   }
 
-  #validateLessThan1(menuCount) {
-    menuCount.forEach((v) => {
-      if (Number.isNaN(Number(v)) || v < 1)
-        throw new Error(
-          '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.',
-        );
+  #validateLessThan1(menuNames, menuCounts) {
+    menuCounts.forEach((menuCount) => {
+      if (Number.isNaN(Number(menuCount)) || menuCount < COUNT.minMenu) {
+        throw new Error(MESSAGE.error.menu);
+      }
     });
+    if (menuNames.length !== menuCounts.length) {
+      throw new Error(MESSAGE.error.menu);
+    }
   }
 
   #validateDuplication(menuNames) {
-    if (menuNames.length !== new Set(menuNames).size)
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    if (menuNames.length !== new Set(menuNames).size) {
+      throw new Error(MESSAGE.error.menu);
+    }
   }
 
-  #validateOnlyDrink(menuNames) {
-    const drink = MENU.filter((item) => item.category === '음료').map(
+  #validateOnly(menuNames) {
+    const menus = MENU.filter((item) => item.category === NAME.drink).map(
       (item) => item.name,
     );
-    const noDrinkMenuNames = menuNames.filter(
-      (value) => !drink.includes(value),
+    const noMenuNames = menuNames.filter(
+      (menuName) => !menus.includes(menuName),
     );
 
-    if (noDrinkMenuNames.length === 0)
-      throw new Error('[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.');
+    if (noMenuNames.length === 0)
+      throw new Error(
+        `[ERROR] ${NAME.drink}만 주문할 수 없습니다. 다시 입력해 주세요.`,
+      );
   }
 
   #validateMenuCount(menuCount) {
     const totalCount = menuCount.reduce((acc, cur) => acc + cur, 0);
 
-    if (totalCount > 20)
+    if (totalCount > COUNT.maxMenu)
       throw new Error(
-        '[ERROR] 메뉴는 한 번에 최대 20개까지 주문이 가능합니다. 다시 입력해 주세요.',
+        `[ERROR] 메뉴는 한 번에 최대 ${COUNT.maxMenu}개까지 주문이 가능합니다. 다시 입력해 주세요.`,
       );
   }
 }
