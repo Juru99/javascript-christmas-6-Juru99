@@ -12,7 +12,7 @@ class Reservation {
     const totalAmount = new Order().calculateTotalAmount(menu);
 
     if (totalAmount >= PRICE.minPrice) {
-      new Benefit().calculateBenefit(totalAmount, visitDate, menu);
+      new Benefit().calculateBenefit(totalAmount, Number(visitDate), menu);
       return;
     }
 

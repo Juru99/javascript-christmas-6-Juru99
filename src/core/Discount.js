@@ -5,6 +5,12 @@ import { DATE, MENU, PRICE } from '../constants/constants';
 class Discount {
   #totalBenefit = [];
 
+  /*
+   * @param {number} totalAmount - 할인 전 총주문 금액
+   * @param {number} visitDate - 방문 날짜
+   * @param {string} menu - 메뉴
+   * @returns {array} this.#totalBenefit - 혜택 내역
+   */
   calculateDiscount(totalAmount, visitDate, menu) {
     const visitDay = Utils.calculateVisitDay(visitDate);
 
@@ -22,6 +28,9 @@ class Discount {
     return this.#totalBenefit;
   }
 
+  /*
+   * @param {number} visitDate - 방문 날짜
+   */
   #christmasDDayDiscount(visitDate) {
     let discount = PRICE.christmasDDayStartDiscount;
     discount += (Number(visitDate) - 1) * PRICE.christmasDDayDiscount;
@@ -29,30 +38,39 @@ class Discount {
     this.#totalBenefit.push(['크리스마스 디데이 할인', discount]);
   }
 
+  /*
+   * @param {string} menu - 메뉴
+   * @param {number} visitDay - 방문 요일
+   */
   #weekDiscount(menu, visitDay) {
     const menus = Utils.separateMenu(menu);
     let categoryName = '';
-    let benefit = '';
+    let benefitName = '';
 
     if (DATE.weekday.includes(visitDay)) {
       categoryName = '디저트';
-      benefit = '평일 할인';
+      benefitName = '평일 할인';
     }
 
     if (DATE.weekend.includes(visitDay)) {
       categoryName = '메인';
-      benefit = '주말 할인';
+      benefitName = '주말 할인';
     }
 
-    this.#weekBenefit(menus, categoryName, benefit);
+    this.#weekBenefit(menus, categoryName, benefitName);
   }
 
-  #weekBenefit(menus, categoryName, benefit) {
+  /*
+   * @param {array} menus - 메뉴
+   * @param {string} categoryName - 카테고리명
+   * @param {string} benefitName - 혜택명
+   */
+  #weekBenefit(menus, categoryName, benefitName) {
     let discount = 0;
     const category = [];
 
     MENU.map(
-      (item) => item.category === categoryName && category.push(item.name),
+      (item) => item.category === categoryName && category.push(item.name)
     );
 
     menus.forEach((menu) => {
@@ -61,7 +79,7 @@ class Discount {
       }
     });
 
-    discount !== 0 && this.#totalBenefit.push([benefit, discount]);
+    discount !== 0 && this.#totalBenefit.push([benefitName, discount]);
   }
 
   #specialDiscount() {

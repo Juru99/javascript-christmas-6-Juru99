@@ -3,6 +3,10 @@ import OutputView from '../views/OutputView';
 import { MENU } from '../constants/constants';
 
 class Order {
+  /*
+   * @param {string} menu - 메뉴
+   * @returns {number} totalAmount - 할인 전 총주문 금액
+   */
   calculateTotalAmount(menu) {
     const menus = Utils.separateMenu(menu);
     const totalAmount = this.#calculateMenu(menus);
@@ -13,6 +17,10 @@ class Order {
     return totalAmount;
   }
 
+  /*
+   * @param {array} menus - 메뉴
+   * @returns {number} totalAmount - 할인 전 총주문 금액
+   */
   #calculateMenu(menus) {
     let totalAmount = 0;
     const [menuNames, menuCounts] = Utils.separateMenuNameCount(menus);
