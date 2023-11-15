@@ -61,16 +61,16 @@ export const MENU = [
   },
 ];
 
-export const DATE = {
+export const DATE = Object.freeze({
   weekday: [0, 1, 2, 3, 4],
   weekend: [5, 6],
   special: [3, 10, 17, 24, 25, 31],
   startDate: 1,
   endEvent: 25,
   endDate: 31,
-};
+});
 
-export const PRICE = {
+export const PRICE = Object.freeze({
   minPrice: 10_000,
   christmasDDayStartDiscount: 1_000,
   christmasDDayDiscount: 100,
@@ -78,20 +78,20 @@ export const PRICE = {
   special: 1_000,
   payment: 120_000,
   freeGift: 25_000,
-};
+});
 
-export const COUNT = {
+export const COUNT = Object.freeze({
   maxMenu: 20,
   minMenu: 1,
-};
+});
 
-export const MESSAGE = {
+export const MESSAGE = Object.freeze({
   error: {
     visitDate: '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.',
     menu: '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.',
   },
-};
+});
 
-export const NAME = {
+export const NAME = Object.freeze({
   drink: '음료',
-};
+});
