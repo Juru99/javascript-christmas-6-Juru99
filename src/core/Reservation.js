@@ -5,6 +5,9 @@ import Order from './Order';
 import { PRICE } from '../constants/constants';
 
 class Reservation {
+  /**
+   * 예약 메시지 전송 함수
+   */
   async makeAReservation() {
     const visitDate = await InputView.readDate();
     const menu = await InputView.readMenu();

@@ -5,7 +5,8 @@ import { DATE, MENU, PRICE } from '../constants/constants';
 class Discount {
   #totalBenefit = [];
 
-  /*
+  /**
+   * 할인 메시지 전송 함수
    * @param {number} totalAmount - 할인 전 총주문 금액
    * @param {number} visitDate - 방문 날짜
    * @param {string} menu - 메뉴
@@ -28,7 +29,8 @@ class Discount {
     return this.#totalBenefit;
   }
 
-  /*
+  /**
+   * 크리스마스 디데이 할인을 계산하는 함수
    * @param {number} visitDate - 방문 날짜
    */
   #christmasDDayDiscount(visitDate) {
@@ -38,7 +40,8 @@ class Discount {
     this.#totalBenefit.push(['크리스마스 디데이 할인', discount]);
   }
 
-  /*
+  /**
+   * 방문 요일에 따라 평일/주말 할인을 선택하는 함수
    * @param {string} menu - 메뉴
    * @param {number} visitDay - 방문 요일
    */
@@ -60,7 +63,8 @@ class Discount {
     this.#weekBenefit(menus, categoryName, benefitName);
   }
 
-  /*
+  /**
+   * 평일/주말 할인을 계산하는 함수
    * @param {array} menus - 메뉴
    * @param {string} categoryName - 카테고리명
    * @param {string} benefitName - 혜택명
@@ -82,10 +86,16 @@ class Discount {
     discount !== 0 && this.#totalBenefit.push([benefitName, discount]);
   }
 
+  /**
+   * 특별 할인 함수
+   */
   #specialDiscount() {
     this.#totalBenefit.push(['특별 할인', PRICE.special]);
   }
 
+  /**
+   * 증정 이벤트 함수
+   */
   #giveawayEventDiscount() {
     this.#totalBenefit.push(['증정 이벤트', PRICE.freeGift]);
   }

@@ -2,7 +2,8 @@ import Utils from '../utils/Utils';
 import { COUNT, DATE, MENU, MESSAGE, NAME } from '../constants/constants';
 
 class Validator {
-  /*
+  /**
+   * 방문 날짜 검증 함수
    * @param {string} visitDate - 방문 날짜
    */
   validateVisitDate(visitDate) {
@@ -10,7 +11,8 @@ class Validator {
     this.#validateNotRange(visitDate);
   }
 
-  /*
+  /**
+   * 메뉴 검증 함수
    * @param {string} menu - 메뉴
    */
   validateMenu(menu) {
@@ -25,7 +27,8 @@ class Validator {
     this.#validateMenuCount(menuCounts);
   }
 
-  /*
+  /**
+   * 입력값이 정수인지 검증하는 함수
    * @param {string} input - 입력값
    */
   #validateIsInteger(input) {
@@ -34,7 +37,8 @@ class Validator {
     }
   }
 
-  /*
+  /**
+   * 월초부터 월말 사이의 날짜가 입력되었는지 검증하는 함수
    * @param {string} visitDate - 방문 날짜
    */
   #validateNotRange(visitDate) {
@@ -46,7 +50,8 @@ class Validator {
     }
   }
 
-  /*
+  /**
+   * 메뉴판에 없는 메뉴인지 검증하는 함수
    * @param {array} menuNames - 주문한 메뉴명들
    * @param {array} allmenuName - 모든 메뉴명
    */
@@ -58,7 +63,8 @@ class Validator {
     });
   }
 
-  /*
+  /**
+   * 메뉴당 최소 1개의 주문을 하였는지 검증하는 함수
    * @param {array} menuNames - 주문한 메뉴명들
    * @param {array} menuCounts - 주문한 메뉴 개수들
    */
@@ -73,7 +79,8 @@ class Validator {
     }
   }
 
-  /*
+  /**
+   * 중복하여 주문했는지 검증하는 함수
    * @param {array} menuNames - 주문한 메뉴명들
    */
   #validateDuplication(menuNames) {
@@ -82,7 +89,8 @@ class Validator {
     }
   }
 
-  /*
+  /**
+   * 음료만 주문하였는지 검증하는 함수
    * @param {array} menuNames - 주문한 메뉴명들
    */
   #validateOnly(menuNames) {
@@ -99,7 +107,8 @@ class Validator {
       );
   }
 
-  /*
+  /**
+   * 메뉴를 20개 초과 주문하였는지 검증하는 함수
    * @param {array} menuCounts - 주문한 메뉴 개수들
    */
   #validateMenuCount(menuCount) {

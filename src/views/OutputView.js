@@ -3,11 +3,15 @@ import { Console } from '@woowacourse/mission-utils';
 import { PRICE } from '../constants/constants';
 
 const OutputView = {
+  /**
+   * 이벤트 플래너 출력 함수
+   */
   printEventPlanner() {
     Console.print('안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.');
   },
 
-  /*
+  /**
+   * 이벤트 혜택 미리보기 출력 함수
    * @param {number} visitDate - 방문 날짜
    */
   printPreview(visitDate) {
@@ -16,7 +20,8 @@ const OutputView = {
     );
   },
 
-  /*
+  /**
+   * 주문 메뉴 출력 함수
    * @param {array} menus - 주문 메뉴
    */
   printMenu(menus) {
@@ -34,7 +39,8 @@ const OutputView = {
     });
   },
 
-  /*
+  /**
+   * 할인 전 총주문 금액 출력 함수
    * @param {number} totalAmount - 할인 전 총주문 금액
    */
   printTotalAmount(totalAmount) {
@@ -44,7 +50,8 @@ const OutputView = {
     Console.print(`${Utils.separateThousand(totalAmount)}원`);
   },
 
-  /*
+  /**
+   * 증정 메뉴 출력 함수
    * @param {number} totalAmount - 할인 전 총주문 금액
    */
   printGiveawayMenu(totalAmount) {
@@ -55,7 +62,8 @@ const OutputView = {
     Console.print(giveawayMenu);
   },
 
-  /*
+  /**
+   * 혜택 내역 출력 함수
    * @param {array} totalBenefit - 혜택 내역
    */
   printBenefitDetails(totalBenefit) {
@@ -66,7 +74,8 @@ const OutputView = {
     });
   },
 
-  /*
+  /**
+   * 총혜택 금액 출력 함수
    * @param {number} totalBenefit - 총혜택 금액
    */
   printTotalBenefit(totalBenefit) {
@@ -74,7 +83,8 @@ const OutputView = {
     Console.print(`-${Utils.separateThousand(totalBenefit)}원`);
   },
 
-  /*
+  /**
+   * 할인 후 예상 결제 금액 출력 함수
    * @param {number} expectedPaymentAmount - 할인 후 예상 결제 금액
    */
   printExpectedPaymentAmount(expectedPaymentAmount) {
@@ -83,7 +93,8 @@ const OutputView = {
     Console.print(`${Utils.separateThousand(expectedPaymentAmount)}원`);
   },
 
-  /*
+  /**
+   * 이벤트 배지 출력 함수
    * @param {number} totalBenefit - 총혜택 금액
    */
   printEventBadge(totalBenefit) {
@@ -97,7 +108,8 @@ const OutputView = {
     Console.print(eventBadge);
   },
 
-  /*
+  /**
+   * 이벤트 미적용 출력 함수
    * @param {number} totalAmount - 총주문 금액
    */
   printNoEvent(totalAmount) {

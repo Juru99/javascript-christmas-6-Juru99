@@ -3,7 +3,8 @@ import OutputView from '../views/OutputView';
 import { MENU } from '../constants/constants';
 
 class Order {
-  /*
+  /**
+   * 주문 메시지 전송 함수
    * @param {string} menu - 메뉴
    * @returns {number} totalAmount - 할인 전 총주문 금액
    */
@@ -17,7 +18,8 @@ class Order {
     return totalAmount;
   }
 
-  /*
+  /**
+   * 총주문 금액을 계산하는 함수
    * @param {array} menus - 메뉴
    * @returns {number} totalAmount - 할인 전 총주문 금액
    */
